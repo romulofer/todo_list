@@ -2,16 +2,26 @@ import {useState} from "react";
 import {TextField, Button} from 'bold-ui';
 import api from "../../api/apiBackend";
 
-
 export const FormularioInput = () =>{
-  const [tarefa, setTarefa] = useState("");
+
+
+  const [entradaTarefa, setEntradaTarefa] = useState("");
   
   const changeTarefaHandler = (event:React.ChangeEvent<HTMLInputElement>) =>{
-    setTarefa(event.target.value);    
+    setEntradaTarefa(event.target.value);    
   }
 
-  const enviarHandler = () =>{
-        
+  const enviarHandler = async () => {
+
+    api.post("/tarefas",{
+      "id":String(Math.random()),
+      "descricao":entradaTarefa
+    }).then((response) => {
+      console.log(response.data);
+    }, (error) => {
+      console.log(error);
+    });
+    //falta atualizar a lista de tarefas depois. Será que dá de usar um custom hook e/ou um context?
   }
   return(
 
@@ -20,7 +30,7 @@ export const FormularioInput = () =>{
         placeholder="Tarefa"
         onChange={changeTarefaHandler}
       />
-        {tarefa}
+        
       <Button
         kind='primary'
         size='medium'

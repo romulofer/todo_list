@@ -6,6 +6,6 @@ import javax.persistence.Id
 @Entity(name="tarefas")
 data class Tarefa (
     @Id //Aqui teria um @GeneratedValue, mas eu vou gerar isso pelo frontend
-    var id: String? = null,
+    var id: String,
     val descricao:String
 )
