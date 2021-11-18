@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import {TarefasProvider} from './Helper/TarefasProvider';
 
 import {FormularioInput} from './components/FormularioInput';
 import {ListaTodo} from './components/ListaTodo';
 
+interface interfaceTarefa{
+  id:string,
+  descricao:string
+}
+
 function App() {
+  //const [tarefas, setTarefas] = useState<interfaceTarefa[]>([]);
   return (
-    <>
-    <FormularioInput />
-    <ListaTodo />
-    </>
+    <TarefasProvider>
+      <FormularioInput />
+      <ListaTodo />
+    </TarefasProvider>
   );
 }
 

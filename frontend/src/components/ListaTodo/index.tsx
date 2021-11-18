@@ -1,4 +1,6 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
+
+import {TarefasContext} from '../../Helper/Context';
 
 import api from '../../api/apiBackend';
 import {ItemTodo} from '../ItemTodo/index';
@@ -10,12 +12,13 @@ interface interfaceTarefa{
 }
 
 export const ListaTodo = () =>{
-  const [tarefas, setTarefas] = useState<interfaceTarefa[]>([])
 
+  const {tarefas, setTarefas} = useContext(TarefasContext);
+  
   async function consultarTarefas(){
     const response = await api.get('/tarefas');
-    setTarefas([...tarefas, ...response.data])
-    console.log(response.data)
+    setTarefas([...tarefas, ...response.data]);
+    console.log(response.data);
   }
   
   useEffect(() =>{
