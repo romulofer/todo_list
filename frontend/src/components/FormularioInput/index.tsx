@@ -2,7 +2,6 @@ import {useState} from "react";
 import {TextField, Button} from 'bold-ui';
 
 import {useTarefas} from '../../Helper/Context';
-import api from "../../api/apiBackend";
 
 export const FormularioInput = () =>{
 
@@ -14,24 +13,11 @@ export const FormularioInput = () =>{
   }
 
   const enviarHandler = async () => {
-    
     const id:string = String(Math.random())
-    api.post("/tarefas",{
-      "id":id,
-      "descricao":entradaTarefa
-    }).then((response) => {
-      console.log(response.data);
-      addTarefa({
-        "id":id,
-        "descricao":entradaTarefa
-      });
-    }, (error) => {
-      console.log(error);
-    });
+    addTarefa({"id":id,"descricao":entradaTarefa}) 
   }
 
   return(
-
     <>
       <TextField 
         placeholder="Tarefa"

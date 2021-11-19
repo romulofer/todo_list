@@ -13,7 +13,7 @@ export const ItemTodo = (props:itemTodoProps) =>{
   const deletaTarefaHandler = async() =>{
     await api.delete(`/tarefas/${props.id}`).then(() =>{deleteTarefa(props.id)})
   }
-  console.log(props)
+  
   return(
     <>
     <HFlow>
