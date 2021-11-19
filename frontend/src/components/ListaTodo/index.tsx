@@ -1,39 +1,36 @@
-import {useEffect, useState, useContext} from 'react';
-
-import {TarefasContext} from '../../Helper/Context';
+import {useEffect} from 'react';
+import {useTarefas} from '../../Helper/Context';
 
 import api from '../../api/apiBackend';
 import {ItemTodo} from '../ItemTodo/index';
+import {interfaceTarefa} from '../../interfaces/interfaces';
 
-
-interface interfaceTarefa{
-  id:string,
-  descricao:string
-}
 
 export const ListaTodo = () =>{
 
-  const {tarefas, setTarefas} = useContext(TarefasContext);
-  
-  async function consultarTarefas(){
-    const response = await api.get('/tarefas');
-    setTarefas([...tarefas, ...response.data]);
-    console.log(response.data);
-  }
-  
+  const {tarefas, addTarefa} = useTarefas();
+
   useEffect(() =>{
     consultarTarefas();
   },[])
-  
+
+  async function consultarTarefas(){
+    const response = await api.get('/tarefas');
+    response.data.forEach((item:interfaceTarefa) => {addTarefa(item)});
+    //console.log(tarefas);
+  }
+    
   return(
     <>
-      {tarefas.map((tarefa:interfaceTarefa) =>{return(
-        <ItemTodo 
-          key={Math.random()}
-          id={tarefa.id}
-          descricao={tarefa.descricao}
-        />
-        );
+      
+      {tarefas.map((tarefa:interfaceTarefa) =>{ console.log(tarefa);
+          return(
+            <ItemTodo 
+              key={tarefa.id}
+              id={tarefa.id}
+              descricao={tarefa.descricao}
+            />
+          );
         })
       }
     </>

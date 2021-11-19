@@ -1,10 +1,12 @@
 import {useState} from "react";
 import {TextField, Button} from 'bold-ui';
+
+import {useTarefas} from '../../Helper/Context';
 import api from "../../api/apiBackend";
 
 export const FormularioInput = () =>{
 
-
+  const {addTarefa} = useTarefas();
   const [entradaTarefa, setEntradaTarefa] = useState("");
   
   const changeTarefaHandler = (event:React.ChangeEvent<HTMLInputElement>) =>{
@@ -12,17 +14,22 @@ export const FormularioInput = () =>{
   }
 
   const enviarHandler = async () => {
-
+    
+    const id:string = String(Math.random())
     api.post("/tarefas",{
-      "id":String(Math.random()),
+      "id":id,
       "descricao":entradaTarefa
     }).then((response) => {
       console.log(response.data);
+      addTarefa({
+        "id":id,
+        "descricao":entradaTarefa
+      });
     }, (error) => {
       console.log(error);
     });
-    //falta atualizar a lista de tarefas depois. Será que dá de usar um custom hook e/ou um context?
   }
+
   return(
 
     <>

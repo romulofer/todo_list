@@ -45,5 +45,4 @@ class TarefaController(private val repository: TarefaRepository) {
             repository.delete(it)
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
-
 }
