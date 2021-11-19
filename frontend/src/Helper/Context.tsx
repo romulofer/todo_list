@@ -23,26 +23,25 @@ const addTarefa = (tarefa:interfaceTarefa)=>{
 
 const deleteTarefa = (id:string) => {
   tarefas.filter(tarefa => tarefa.id !== id);
+
 }
 
 const consultarTarefas = async () =>{
-  await api.get("/tarefas").then(response => {
-    const tarefasApi:interfaceTarefa[] = response.data;
+  const response = await api.get("/tarefas")
+  const tarefasApi:interfaceTarefa[] = response.data;
+  
+  if(tarefas.length===0){
+    tarefasApi.forEach(tarefaApi => {
+      tarefas.push(tarefaApi);
+    })
     
-    
-    if(tarefas.length===0){
-      tarefasApi.forEach(tarefaApi => {
-        tarefas.push(tarefaApi);
-      })
-      
-    }else{
-    tarefasApi.forEach(tarefaApi =>{
-      if(tarefas.some(tarefa => tarefa.id !== tarefaApi.id)){
-        tarefas.push(tarefaApi)
-      }
-    });
+  }else{
+  tarefasApi.forEach(tarefaApi =>{
+    if(tarefas.some(tarefa => tarefa.id !== tarefaApi.id)){
+      tarefas.push(tarefaApi)
+    }
+  });
   }
-  })
 }
 
 const TarefasContext = createContext({
@@ -51,7 +50,7 @@ const TarefasContext = createContext({
                                        deleteTarefa:deleteTarefa,
                                        consultarTarefas:consultarTarefas
                                       });
-export const useTarefas = () => useContext(TarefasContext)
+export const useTarefasContext = () => useContext(TarefasContext)
 
 
 export const TarefasProvider = ({children}:TarefasProviderProps) =>{

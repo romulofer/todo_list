@@ -1,7 +1,7 @@
 import {Checkbox, HFlow, Button, Icon} from 'bold-ui';
 
 import api from '../../api/apiBackend';
-import {useTarefas} from '../../Helper/Context';
+import {useTarefasContext} from '../../Helper/Context';
 
 interface itemTodoProps{
   id: string,
@@ -9,13 +9,13 @@ interface itemTodoProps{
 }
 
 export const ItemTodo = (props:itemTodoProps) =>{
-  const {deleteTarefa} = useTarefas()
+  const {deleteTarefa} = useTarefasContext()
   const deletaTarefaHandler = async() =>{
     await api.delete(`/tarefas/${props.id}`).then(() =>{deleteTarefa(props.id)})
   }
   
   return(
-    <>
+    
     <HFlow>
       <Checkbox label={props.descricao} />
       <Button 
@@ -26,6 +26,6 @@ export const ItemTodo = (props:itemTodoProps) =>{
         <Icon icon='trashOutline' />
       </Button>
     </HFlow>
-    </>
+    
   );
 }

@@ -1,27 +1,27 @@
 import {useEffect} from 'react';
-import {useTarefas} from '../../Helper/Context';
 
-//import api from '../../api/apiBackend';
+import {useTarefas} from '../../hooks/useTarefas';
+
 import {ItemTodo} from '../ItemTodo/index';
 import {interfaceTarefa} from '../../interfaces/interfaces';
 
-
-
 export const ListaTodo = () =>{
-  const {tarefas, consultarTarefas} = useTarefas();
-  useEffect(() =>{consultarTarefas()},[]);    
+  useEffect(() =>{consultarDados()},[])
+  const {dados, consultarDados} = useTarefas();
   return(
     <>
-      {console.log(tarefas)}
-      {tarefas.map((tarefa:interfaceTarefa) =>{
-          return(
-            <ItemTodo 
-              key={tarefa.id}
-              id={tarefa.id}
-              descricao={tarefa.descricao}
-            />
-          );
-        })
+
+      {console.log(dados)}
+      {dados.map((tarefa:interfaceTarefa) =>
+          
+
+      <ItemTodo 
+        key={tarefa.id}
+        id={tarefa.id}
+        descricao={tarefa.descricao}
+      />
+          
+        )
       }
     </>
   );
